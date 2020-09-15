@@ -43,3 +43,15 @@
 
 - nextjs 自带的服务器只是处理 ssr 渲染 , 无法处理 数据接口 , 数据库连接 , session 状态
 - 实际服务器需要处理 HTTP 请求 , 并根据请求数据返回相应内容 , 还需要根据域名之类的 HOST 来定位服务器
+
+## 安装 redis 数据库
+
+### Windows
+
+官方没有 Windows 包 , 是由微软创建 : <https://github.com/microsoftarchive/redis/releases>
+
+版本比较老 , 建议下载 3.0.504 稳定版
+
+安装之后 会自动添加到 Windows 的服务中自启动 , 如果想手动启动可以执行 安装目录下的 `.\redis-server.exe .\redis.windows.conf` , 记住要指定 Windows 上的配置文件
+
+判断 redis 服务是否启动 : 在安装目录下 `.\redis-cli.exe` 或 在任意路径(因为安装时已经添加到环境变量中了)`redis-cli`
