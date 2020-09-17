@@ -55,3 +55,52 @@
 安装之后 会自动添加到 Windows 的服务中自启动 , 如果想手动启动可以执行 安装目录下的 `.\redis-server.exe .\redis.windows.conf` , 记住要指定 Windows 上的配置文件
 
 判断 redis 服务是否启动 : 在安装目录下 `.\redis-cli.exe` 或 在任意路径(因为安装时已经添加到环境变量中了)`redis-cli`
+
+### redis 基本使用
+
+是基于协议的使用方式 , 启动了 redis-server 之后 , 可以使用 redis-cli 连接数据库 , 同时可以使用不同语言的 SDK 连接数据库.
+
+- redis 数据库是 **内存数据结构存储**
+- 可持久存储
+- 支持多种数据结构
+- 连接数据库后 , 在命令行中 `set` 是存储 , `get` 是获取
+- `setex` : 给某一个 key 设置过期时间 , 例如 `setex c 10 1` 意思是 key c 的值是 1 , 在 10 秒后过期.
+- `KEYs *` : 获取所有存储的 key
+- `DEL <key>` : 删除某个 key
+
+#### 给 redis 设置密码
+
+- 打开 redis.windows.conf 的文件
+- 在配置文件中找到 requirepass 后面注释的部分是密码
+- 可更改 端口 port 启动另外一个 redis 服务
+- 在 redis 目录下启动 `.\redis-server.exe .\redis.windows.conf`
+- 连接数据库 : `redis-cli -p <port>`
+- 密码认证 : `auth <password>`
+
+#### nodejs 连接 redis 数据库
+
+- 可以使用模块 : ioredis , `yarn add ioredis`
+
+```js
+async function test() {
+  const Redis = require('ioredis')
+
+  const redis = new Redis({
+    port: 6378,
+    password: 123456
+  })
+
+  await = redis.setex('c', 10, 123)
+  const keys = await redis.keys('*')
+  console.log(await redis.get('c'))
+}
+```
+
+## nextjs 集成 antd
+
+一些问题:
+
+- nextjs 默认不支持 css import
+- 需要根据 nextjs 提供的插件机制支持 css import
+- 创建 `next.config.js` 文件 , 这是 nextjs 的整体配置文件
+- 然后安装 `@zeit/next-css` , 用于加载 css
