@@ -104,3 +104,52 @@ async function test() {
 - 需要根据 nextjs 提供的插件机制支持 css import
 - 创建 `next.config.js` 文件 , 这是 nextjs 的整体配置文件
 - 然后安装 `@zeit/next-css` , 用于加载 css
+
+## Nextjs 基础
+
+### nextjs 目录结构
+
+- pages
+  - 所有的文件对应一个页面 , `_app.js` 和 `_document.js` 是例外
+- components
+  - 公用组件
+- lib
+  - 非组件型的公用型代码 , 比如 utils
+- static
+  - 图片
+- .next
+- next.config.js
+  - nextjs 相关配置文件
+
+### 路由基础
+
+#### Link
+
+进行前端路由跳转
+
+```js
+import Link from 'next/link';
+
+export default () =>
+(  <Link href='/a'>
+    <button>a</button>
+  </Link>;
+);
+```
+
+Link 本身没有任何标签 , 只是监听了点击事件.
+
+#### Router 模块
+
+手动跳转
+
+```js
+import Router from 'next/router';
+
+export default () => {
+  function gotoTestB() {
+    Router.push('/test/b');
+  }
+  return <button onClick={gotoTestB}>a</button>;
+};
+```
